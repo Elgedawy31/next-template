@@ -1,0 +1,11 @@
+services:
+  next_template_app:
+    container_name: next_template_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.production
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

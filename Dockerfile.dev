@@ -1,0 +1,16 @@
+FROM oven/bun:1.2.18-alpine
+
+WORKDIR /app
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --ignore-scripts
+
+COPY . .
+
+ENV NODE_ENV=development
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+EXPOSE 3000
+
+CMD ["bun", "run", "dev", "--hostname", "0.0.0.0", "--port", "3000"]
