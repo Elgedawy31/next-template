@@ -1,5 +1,6 @@
 import type { User } from "@/entities/user";
 
 export type LoginResponse = {
-  user: User;
+  user: User & { token?: string };
+  token?: string;
 };

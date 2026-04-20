@@ -26,7 +26,7 @@ import {
 
 export function LoginForm() {
   const router = useRouter();
-  const setUser = useAuthStore((s) => s.setUser);
+  const { setUser, setToken } = useAuthStore((s) => s);
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -35,8 +35,12 @@ export function LoginForm() {
 
   async function onSubmit(values: LoginSchema) {
     try {
-      const { user } = await loginRequest(values);
+      const { user, token: responseToken } = await loginRequest(values);
+      const token = user.token ?? responseToken ?? null;
+
       setUser(user);
+      setToken(token);
+
       clientToast.success("Signed in successfully.");
       router.push("/");
       router.refresh();
